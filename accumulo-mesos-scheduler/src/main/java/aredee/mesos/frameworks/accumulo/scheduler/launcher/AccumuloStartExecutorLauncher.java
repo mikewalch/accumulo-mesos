@@ -133,6 +133,7 @@ public class AccumuloStartExecutorLauncher implements Launcher {
         // Json to pass to task on executor
         ServerProfile profile = match.getTask().getServerProfile();
         profile.setSiteXml(config.getCluster().getSiteXml());
+        LOGGER.info("Setting siteXml for {}: {}", keyword, config.getCluster().getSiteXml());
         if( config.getCluster().hasNativeLibUri() ){
             profile.setUseNativemaps(true);
         }
