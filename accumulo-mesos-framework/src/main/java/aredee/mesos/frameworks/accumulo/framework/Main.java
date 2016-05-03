@@ -53,7 +53,6 @@ public final class Main {
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
 
-
         CommandLineHandler cmdHandler = new CommandLineHandler(args);
         if( cmdHandler.checkHelpOrVersion() ){
             System.exit(0);  // checkHelpOrVersion prints appropriate info to System.out
@@ -134,7 +133,6 @@ public final class Main {
         // Sanity check before firing up processes.
         LOGGER.info("Preconditions check: {}", config);
 
-        Preconditions.checkState(!Strings.isNullOrEmpty(config.getId()));
         Preconditions.checkState( !Strings.isNullOrEmpty(config.getName()));
         Preconditions.checkState( config.hasCluster(), "No cluster definition found, exiting" );
 
@@ -205,9 +203,11 @@ public final class Main {
     }
 
     private static org.apache.mesos.Protos.FrameworkID createMesosFrameworkID(String frameworkId){
-        return org.apache.mesos.Protos.FrameworkID.newBuilder()
-                .setValue(frameworkId)
-                .build();
+        String fid = frameworkId;
+        if (Strings.isNullOrEmpty(fid)) {
+            fid = "accumulo-mesos-"+UUID.randomUUID();
+        }
+        return org.apache.mesos.Protos.FrameworkID.newBuilder().setValue(fid).build();
     }
 
     private void startWebserverOrDie(Injector injector){
