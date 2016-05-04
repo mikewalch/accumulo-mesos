@@ -101,6 +101,7 @@ public class FrameworkStateHelper {
     }
 
     private void updateRegistry(Framework config) throws InterruptedException, ExecutionException, IOException {
+        LOGGER.info("update registry: {}", config.getId());
         synchronized (REGISTERED_FRAMEWORKS_KEY){
             boolean foundFramework = false;
             List<IdRegistry.RegistryPair> newRegistry = Lists.newArrayList();
@@ -109,6 +110,7 @@ public class FrameworkStateHelper {
                 registry = getFrameworkRegistry();
                 for (IdRegistry.RegistryPair pair : registry.getRegistry()) {
                     if (pair.getId().equals(config.getId())) {
+                        LOGGER.info("found framework: {}", config.getId());
                         foundFramework = true;
                     }
                     newRegistry.add(pair);
@@ -117,6 +119,7 @@ public class FrameworkStateHelper {
                 registry = new IdRegistry();
             }
             if( !foundFramework ){
+                LOGGER.info("add framework: {}", config.getId());
                 newRegistry.add(new IdRegistry.RegistryPair(config.getName(), config.getId()));
             }
             registry.setRegistry(newRegistry);
