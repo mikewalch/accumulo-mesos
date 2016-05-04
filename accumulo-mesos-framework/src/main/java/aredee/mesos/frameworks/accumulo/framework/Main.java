@@ -77,7 +77,7 @@ public final class Main {
             LOGGER.info("Found previous framework with name {}", frameworkName);
 
             Framework savedConfig = stateHelper.getFrameworkConfig(frameworks.get(frameworkName));
-            LOGGER.info("framework sitexml", savedConfig.getCluster().getSiteXml());
+            LOGGER.info("framework sitexml {}", savedConfig.getCluster().getSiteXml());
             LOGGER.info("Found saved framework config: {}", savedConfig );
             frameworkConfig.merge(savedConfig);
             LOGGER.info("Merged command line configuration with saved configuration. Command line trumps.");
@@ -118,7 +118,7 @@ public final class Main {
             try {
                 LOGGER.info("Starting mesos-accumumlo framework version " + Constants.FRAMEWORK_VERSION);
 
-                LOGGER.info("framework sitexml", frameworkConfig.getCluster().getSiteXml());
+                LOGGER.info("framework sitexml {}", frameworkConfig.getCluster().getSiteXml());
                 exitStatus = new Main().run(frameworkConfig, state);
             } catch (Exception e) {
                 LOGGER.error("Unhandled exception encountered, exiting: ", e);
