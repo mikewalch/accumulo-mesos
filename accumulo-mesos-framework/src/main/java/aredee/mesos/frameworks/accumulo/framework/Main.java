@@ -113,7 +113,7 @@ public final class Main {
                 System.exit(1);
             }
             Framework f = stateHelper.getFrameworkConfig(frameworkConfig.getId());
-            LOGGER.info("sitexml ({})", f.getCluster().getSiteXml())
+            LOGGER.info("sitexml ({})", f.getCluster().getSiteXml());
         } else {
 
             int exitStatus = -1;
