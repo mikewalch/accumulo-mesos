@@ -44,9 +44,11 @@ public class FrameworkStateHelper {
     private IdRegistry getFrameworkRegistry() throws ExecutionException, InterruptedException, IOException {
         IdRegistry registry;
         if( hasRegisteredFrameworks() ) {
+            LOGGER.info("has frameworks");
             byte[] registryBytes = getBytesForKey(REGISTERED_FRAMEWORKS_KEY);
             registry = mapper.readValue(registryBytes, IdRegistry.class);
         } else {
+            LOGGER.info("no frameworks");
             registry = new IdRegistry();
         }
         return registry;
@@ -125,7 +127,11 @@ public class FrameworkStateHelper {
             registry.setRegistry(newRegistry);
             byte[] regBytes = mapper.writeValueAsBytes(registry);
             saveBytesForKey(REGISTERED_FRAMEWORKS_KEY, regBytes);
+            LOGGER.info("saved registry: {}", config.getId());
         }
+
+        LOGGER.info("getting framework registry");
+        getFrameworkRegistry();
     }
 
     private boolean keyExists(String inKey) throws InterruptedException {
